@@ -1,0 +1,6 @@
+SERVICE:
+  HOST: '0.0.0.0'
+  PORT: 5100
+
+  UPLOAD_FOLDER_TRAIN: 'data/train'
+  UPLOAD_FOLDER_TEST: 'data/test'

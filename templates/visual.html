@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="static/css/visual.css">
+
+    <title>Comic</title>
+</head>
+
+<body>
+    <header>  
+        <nav class="navbar navbar-dark bg-dark" style="background-color: #878a8a; padding: 4px 16px">
+            <div class="col-xs-2"> 
+                <img src="https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/121103325_141100801069955_4394738796969079743_o.png?_nc_cat=105&ccb=2&_nc_sid=09cbfe&_nc_ohc=LUhSuwTfz8YAX_d84ZN&_nc_ht=scontent.fsgn2-1.fna&oh=7a7ae7ace62a1878f98eb5afc01bf65b&oe=603FAF78" alt="Logo AI" width="40" height="40">
+                <h2 class="navbar-brand">Comic Visualization</h2>
+            </div>
+        </nav>
+    </header>
+    <br>
+    <div class='row'>
+        <div class='col-6'>
+            <!-- <img src="http://0.0.0.0:5100/get_ori_img" width="400" height="400"></img> -->
+            <canvas id="preview_img" class="canvas_preview_img"></canvas> 
+        </div>
+        
+        <div class='col-6'>
+            <div class='grid-container'>
+                <div class="item-mode-dataset">
+                    <label for="choose_dataset" >Dataset</label>
+                </div>
+                <div class="item-mode-select-dataset">
+                    <select id="choose_dataset" name="choose_dataset">
+                        <option value="train">Train</option>
+                        <option value="test">Test</option>
+                        <!-- <option value="latest_test">Latest_Test</option> -->
+                    </select>
+                </div>
+                <div class="item-mode">
+                    <label for="mode" >Mode</label>
+                </div>
+                <div class="item-mode-select">
+                    <select id="mode" name="mode">
+                        <option value="index">Index</option>
+                        <option value="path">Path</option>
+                    </select>
+                </div>
+                <div class="item-imnum">
+                    <label for="number_id">Number/Path</label>
+                </div>
+                <div class="item-imnum-input">
+                    <input type="text" id="number_id" name="number" placeholder="Enter number...">
+                </div>
+                <div class="item-submit-btn">
+                    <button id="btn-loadfile" type="button" class="btn-load">Load</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="static/js/visual.js"></script>
+</body>
+
+</html>
