@@ -58,3 +58,46 @@ function drawImageOCR(src) {
     };
     imageObj.src = src;
 }
+
+function view_previous_image(){
+    var index = document.getElementById("number_id").value;
+    var dataset = document.getElementById("choose_dataset").value;
+
+    index = parseInt(index)
+    if (index > 0) {
+        index = index - 1;
+    }
+
+    getImgFileName('index', String(index), dataset);
+}
+
+function view_next_image(){
+    var index = document.getElementById("number_id").value;
+    var dataset = document.getElementById("choose_dataset").value;
+
+    index = parseInt(index) ;
+
+    if (index <  total_of_images-1){
+        index += 1;
+    }
+    else{
+        index = 0;
+    }
+
+    getImgFileName('index', String(index), dataset);
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        // case 13:
+        //     save_info_idcard();
+        //     break;
+        case 37:
+           view_previous_image();
+           break;
+        case 39:
+           view_next_image();
+           break;
+    }
+};

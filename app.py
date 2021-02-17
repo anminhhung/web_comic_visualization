@@ -18,6 +18,7 @@ UPLOAD_FOLDER = None
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
+@app.route('/')
 @app.route('/home')
 def view_home():
     return render_template('visual.html')
