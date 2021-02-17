@@ -32,7 +32,7 @@ function getImgFileName(mode, index, dataset){
             if (return_index.localeCompare('-1')==0){
                 window.location.href = "idcard?mode=index&index=0";
             }
-            drawImageOCR("/get_ori_img?dataset="+dataset+"&filename="+fname, fname, index);
+            drawImageOCR("get_ori_img?dataset="+dataset+"&filename="+fname, fname, index);
             // loadLabel(fname, dataset);
         }
     }).done(function() {
