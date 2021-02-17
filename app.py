@@ -2,7 +2,9 @@ from flask import Flask, render_template, jsonify, Response, request
 import cv2
 import os
 import numpy as np
+import pandas as pd
 import json
+import ast 
 
 from utils.parser import get_config
 
@@ -15,6 +17,12 @@ UPLOAD_FOLDER_TRAIN = cfg.SERVICE.UPLOAD_FOLDER_TRAIN
 UPLOAD_FOLDER_TEST = cfg.SERVICE.UPLOAD_FOLDER_TEST
 
 UPLOAD_FOLDER = None
+LIST_EMOTION = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral', 'others']
+# FILE_LIST = os.listdir(UPLOAD_FOLDER)
+
+df = pd.read_csv('data/additional_infor:train_emotion_polarity.csv')
+d = {'image_id': df['image_id'], 'emotion_polarity': df['emotion_polarity']}
+MY_DF = pd.DataFrame(d)
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -34,25 +42,40 @@ def get_img_name():
     elif dataset == 'test':
         UPLOAD_FOLDER = UPLOAD_FOLDER_TEST
 
-    file_list = os.listdir(UPLOAD_FOLDER)
+    FILE_LIST = os.listdir(UPLOAD_FOLDER)
     print("index: ", index)
-    print("file_list[0]: ", file_list[0])
-    len_file_list = len(file_list)
+    print("file_list[0]: ", FILE_LIST[0])
+    len_file_list = len(FILE_LIST)
     fname = None
     if mode == 'path':
-        for i in range(len(file_list)):
-            if file_list[i] == index:
-                fname = file_list[i]
+        for i in range(len(FILE_LIST)):
+            if FILE_LIST[i] == index:
+                fname = FILE_LIST[i]
                 break
     else:
         index = int(index)
         if index >= len_file_list:
-            fname = file_list[0]
+            fname = FILE_LIST[0]
             index = -1
         else:
-            fname = file_list[index]
+            fname = FILE_LIST[index]
     
-    return_result = {'code': '1000', 'status': 'Done', 'data':{'fname': fname, 'index': index, 'total': len_file_list}}
+    img_id = fname.split(".")[0]
+    dict_emotion = {}
+    index_row = MY_DF.index[df['image_id'] == img_id].tolist()
+    index_row = index_row[0]
+    emotion = MY_DF['emotion_polarity'][index]
+    emotion = ast.literal_eval(emotion) 
+    for key_emotion in LIST_EMOTION:
+        if key_emotion not in emotion:
+            dict_emotion[key_emotion] = "0"
+        else:
+            dict_emotion[key_emotion] = str(emotion[key_emotion])
+    
+    # print("dict_emotion: ", dict_emotion)
+    
+    return_result = {'code': '1000', 'status': 'Done', \
+                    'data':{'fname': fname, 'index': index, 'total': len_file_list, 'dict_emotion': dict_emotion}}
 
     return jsonify(return_result)
 

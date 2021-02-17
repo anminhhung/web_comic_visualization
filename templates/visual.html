@@ -36,7 +36,6 @@
     <br>
     <div class='row'>
         <div class='col-6'>
-            <!-- <img src="http://0.0.0.0:5100/get_ori_img" width="400" height="400"></img> -->
             <canvas id="preview_img" class="canvas_preview_img"></canvas> 
         </div>
         
@@ -57,20 +56,45 @@
                 </div>
                 <div class="item-mode-select">
                     <select id="mode" name="mode">
-                        <option value="index">Index</option>
+                        <option value="index" >Index</option>
                         <option value="path">Path</option>
                     </select>
                 </div>
                 <div class="item-imnum">
-                    <label for="number_id">Number/Path</label>
+                    <label for="number_index">Number/Path</label>
                 </div>
                 <div class="item-imnum-input">
-                    <input type="text" id="number_id" name="number" placeholder="Enter number...">
+                    <input type="text" id="number_index" name="number" placeholder="Enter number...">
                 </div>
                 <div class="item-submit-btn">
                     <button id="btn-loadfile" type="button" class="btn-load">Load</button>
                 </div>
             </div>
+
+            <p id="noti_fname"></p>
+            
+            <table style="width:100%">
+                <tr>
+                  <th><center>Angry</center></th>
+                  <th><center>Disgust</center></th> 
+                  <th><center>Fear</center></th>
+                  <th><center>Happy</center></th>
+                  <th><center>Sad</center></th>
+                  <th><center>Surprise</center></th>
+                  <th><center>Neutral</center></th>
+                  <th><center>Others</center></th>
+                </tr>
+                <tr>
+                  <td><center><p id="noti_angry"></p></center></td>
+                  <td><center><p id="noti_disgust"></p></center></td>
+                  <td><center><p id="noti_fear"></p></center></td>
+                  <td><center><p id="noti_happy"></p></center></td>
+                  <td><center><p id="noti_sad"></p></center></td>
+                  <td><center><p id="noti_surprise"></p></center></td>
+                  <td><center><p id="noti_neutral"></p></center></td>
+                  <td><center><p id="noti_others"></p></center></td>
+                </tr>
+              </table>
         </div>
     </div>
 

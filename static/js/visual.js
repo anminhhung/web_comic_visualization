@@ -1,7 +1,8 @@
+var total_of_images = 100
 
 $('#btn-loadfile').click(function () {
     var mode = document.getElementById("mode").value;
-    var index = document.getElementById("number_id").value;
+    var index = document.getElementById("number_index").value;
     var dataset = document.getElementById("choose_dataset").value;
 
     if (mode.localeCompare('index')==0){
@@ -26,14 +27,32 @@ function getImgFileName(mode, index, dataset){
             fname = response['data']['fname'];
             index = response['data']['index'];
             total = response['data']['total'];
+            dict_emotion = response['data']['dict_emotion'];
             total_of_images = total;
-            document.getElementById('number_id').value = index;
+            document.getElementById('number_index').value = index;
             var return_index = String(response['data']['index']);
             if (return_index.localeCompare('-1')==0){
                 window.location.href = "idcard?mode=index&index=0";
             }
+            angry_prob = dict_emotion['angry']
+            disgust_prob = dict_emotion['disgust']
+            fear_prob = dict_emotion['fear']
+            happy_prob = dict_emotion['happy']
+            sad_prob = dict_emotion['sad']
+            surprise_prob = dict_emotion['surprise']
+            neutral_prob = dict_emotion['neutral']
+            other_prob = dict_emotion['others']
+
             drawImageOCR("get_ori_img?dataset="+dataset+"&filename="+fname, fname, index);
-            // loadLabel(fname, dataset);
+            document.getElementById("noti_angry").innerHTML = angry_prob;
+            document.getElementById("noti_disgust").innerHTML = disgust_prob;
+            document.getElementById("noti_fear").innerHTML = fear_prob;
+            document.getElementById("noti_happy").innerHTML = happy_prob;
+            document.getElementById("noti_sad").innerHTML = sad_prob;
+            document.getElementById("noti_surprise").innerHTML = surprise_prob;
+            document.getElementById("noti_neutral").innerHTML = neutral_prob;
+            document.getElementById("noti_others").innerHTML = other_prob;
+            document.getElementById("noti_fname").innerHTML = "filename: " + fname;
         }
     }).done(function() {
         
@@ -60,7 +79,7 @@ function drawImageOCR(src) {
 }
 
 function view_previous_image(){
-    var index = document.getElementById("number_id").value;
+    var index = document.getElementById("number_index").value;
     var dataset = document.getElementById("choose_dataset").value;
 
     index = parseInt(index)
@@ -72,7 +91,7 @@ function view_previous_image(){
 }
 
 function view_next_image(){
-    var index = document.getElementById("number_id").value;
+    var index = document.getElementById("number_index").value;
     var dataset = document.getElementById("choose_dataset").value;
 
     index = parseInt(index) ;
@@ -83,6 +102,8 @@ function view_next_image(){
     else{
         index = 0;
     }
+
+    console.log("index: " + index);
 
     getImgFileName('index', String(index), dataset);
 }
