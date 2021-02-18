@@ -7,6 +7,7 @@ import json
 import ast 
 
 from utils.parser import get_config
+# # http://0.0.0.0:8081/thumbnailimg?index=0&imgpath=data/sample/img/&labelpath=data/sample/label/
 
 cfg = get_config()
 cfg.merge_from_file('configs/services.yaml')
@@ -96,6 +97,45 @@ def get_ori_img():
                      b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tostring() + b'\r\n\r\n'),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/thumbnailimg')
+def thumbnailimg():
+    print("load_iddoc")
+    pagefile = []
+    index = int(request.args.get('index'))
+    if index == None:
+        index = 0
+    imgperindex = 100
+    
+    imgpath = request.args.get('imgpath')
+    pagefile = []
+    filelist = os.listdir(imgpath)
+    if len(filelist)-1 > index+imgperindex:
+        page_filelist = filelist[index*imgperindex:index*imgperindex+imgperindex]
+    else:
+        page_filelist = filelist[index*imgperindex:len(filelist)]
+
+    for fname in page_filelist:
+        pagefile.append({'imgpath': imgpath, 'fname': fname})
+
+    data = {'num_page': int(len(filelist)/imgperindex)+1, 'pagefile': pagefile}
+    return render_template('index_thumb.html', data=data)
+
+@app.route('/get_img')
+def get_img():
+    # print("get_img")
+    fpath = request.args.get('fpath')
+    fpath = fpath
+    if os.path.exists(fpath):
+        img = cv2.imread(fpath)
+    else:
+        img = cv2.imread("./static/images/404.jpg")
+#    y,x,_ = img.shape
+#    ratio = 750/x
+#    img = cv2.resize(img, (750, int(y*ratio)))
+    ret, jpeg = cv2.imencode('.jpg', img)
+    return  Response((b'--frame\r\n'
+                     b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tostring() + b'\r\n\r\n'),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
